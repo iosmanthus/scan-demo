@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"flag"
+	"fmt"
 	"log"
 
 	"github.com/tikv/client-go/v2/config"
@@ -21,7 +22,11 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer client.Close()
 
-	keys, _, err := client.Scan(ctx, nil, nil, *limit)
-	log.Printf("scaned %v keys\n", len(keys))
+	keys, values, err := client.Scan(ctx, nil, nil, *limit)
+	fmt.Printf("scaned %v keys\n", len(keys))
+	for i := 0; i < len(keys); i++ {
+		fmt.Printf("%s:%s\n", string(keys[i]), string(values[i]))
+	}
 }
