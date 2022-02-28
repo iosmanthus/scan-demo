@@ -27,6 +27,6 @@ func main() {
 	keys, values, err := client.Scan(ctx, nil, nil, *limit)
 	fmt.Printf("scaned %v keys\n", len(keys))
 	for i := 0; i < len(keys); i++ {
-		fmt.Printf("%s:%s\n", string(keys[i]), string(values[i]))
+		fmt.Printf("[%s:%s]\n", string(keys[i]), string(values[i]))
 	}
 }
